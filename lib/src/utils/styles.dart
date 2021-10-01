@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppColorScheme {
   static const List<Color> colors = [
@@ -59,13 +58,6 @@ class AppColorScheme {
   );
 }
 
-class AppTextStyles {
-  static TextTheme textTheme = GoogleFonts.rosarioTextTheme().apply(
-    bodyColor: AppColorScheme.onBackground,
-    displayColor: AppColorScheme.onBackground,
-  );
-}
-
 class Insets {
   static const double sm = 5.0;
   static const double m = 8.0;
@@ -74,10 +66,116 @@ class Insets {
   static const double xl = 24.0;
 }
 
+extension InsetExt on double {
+  Widget get horizontal => SizedBox(width: this);
+  Widget get vertical => SizedBox(height: this);
+}
+
 class Sizes {
   static const double sm = 24.0;
   static const double m = 32.0;
   static const double mid = 48.0;
   static const double l = 60.0;
   static const double xl = 80.0;
+}
+
+class Corners {
+  static double sm = 5.0;
+  static Radius smRadius = Radius.circular(sm);
+  static BorderRadius smBRadius = BorderRadius.circular(sm);
+
+  static double m = 10.0;
+  static Radius mRadius = Radius.circular(m);
+  static BorderRadius mBRadius = BorderRadius.circular(m);
+
+  static double l = 15.0;
+  static Radius lRadius = Radius.circular(l);
+  static BorderRadius lBRadius = BorderRadius.circular(l);
+
+  static double xl = 20.0;
+  static Radius xlRadius = Radius.circular(xl);
+  static BorderRadius xlBRadius = BorderRadius.circular(xl);
+}
+
+class Durations {
+  static const Duration fastest = Duration(milliseconds: 150);
+
+  static const Duration fast = Duration(milliseconds: 250);
+
+  static const Duration medium = Duration(milliseconds: 350);
+
+  static const Duration slow = Duration(milliseconds: 700);
+}
+
+final ThemeData kAppTheme = ThemeData(
+  textTheme: TextTheme(
+    headline1: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.54),
+        decoration: TextDecoration.none),
+    headline2: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.54),
+        decoration: TextDecoration.none),
+    headline3: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.54),
+        decoration: TextDecoration.none),
+    headline4: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.54),
+        decoration: TextDecoration.none),
+    headline5: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.87),
+        decoration: TextDecoration.none),
+    headline6: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.87),
+        decoration: TextDecoration.none),
+    bodyText1: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.87),
+        decoration: TextDecoration.none),
+    bodyText2: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.87),
+        decoration: TextDecoration.none),
+    subtitle1: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.87),
+        decoration: TextDecoration.none),
+    subtitle2: TextStyle(
+        fontFamily: 'Circular', inherit: true, color: AppColorScheme.onBackground, decoration: TextDecoration.none),
+    caption: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.54),
+        decoration: TextDecoration.none),
+    button: TextStyle(
+        fontFamily: 'Circular',
+        inherit: true,
+        color: AppColorScheme.onBackground.withOpacity(0.87),
+        decoration: TextDecoration.none),
+    overline: TextStyle(
+        fontFamily: 'Circular', inherit: true, color: AppColorScheme.onBackground, decoration: TextDecoration.none),
+  ),
+  colorScheme: AppColorScheme.colorScheme,
+  scaffoldBackgroundColor: AppColorScheme.background,
+);
+
+extension ThemeExt on BuildContext {
+  ThemeData get theme => Theme.of(this);
+  TextTheme get textTheme => Theme.of(this).textTheme;
+
+  ColorScheme get colorScheme => Theme.of(this).colorScheme;
 }
