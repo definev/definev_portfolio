@@ -7,9 +7,11 @@ class BorderButton extends HookWidget {
     Key? key,
     required this.child,
     required this.onPressed,
+    this.alwayBorder,
   }) : super(key: key);
   final Widget child;
   final VoidCallback onPressed;
+  final bool? alwayBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,11 @@ class BorderButton extends HookWidget {
           style: ButtonStyle(
             fixedSize: MaterialStateProperty.all(const Size.fromHeight(Sizes.m)),
             shape: MaterialStateProperty.all(const StadiumBorder()),
-            side: MaterialStateProperty.all(
-                hoverState.value ? BorderSide(color: context.colorScheme.secondary, width: 1.5) : null),
+            side: MaterialStateProperty.all(alwayBorder == true
+                ? BorderSide(color: context.colorScheme.secondary, width: 1.5)
+                : hoverState.value
+                    ? BorderSide(color: context.colorScheme.secondary, width: 1.5)
+                    : null),
             padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: Insets.l)),
           ),
           onPressed: onPressed,

@@ -55,7 +55,7 @@ class NotFoundPage extends StatelessWidget {
                       builder: (context, sizeInfo) {
                         if (sizeInfo.deviceScreenType == DeviceScreenType.desktop) {
                           return Text(
-                            '404 Not Found 💫',
+                            '404 Not Found',
                             style: context.textTheme.headline2!.copyWith(
                               color: context.colorScheme.onSecondary,
                             ),
@@ -63,7 +63,7 @@ class NotFoundPage extends StatelessWidget {
                         }
                         if (sizeInfo.deviceScreenType == DeviceScreenType.tablet) {
                           return Text(
-                            '404 Not Found 💫',
+                            '404 Not Found',
                             style: context.textTheme.headline3!.copyWith(
                               color: context.colorScheme.onSecondary,
                             ),
@@ -71,14 +71,14 @@ class NotFoundPage extends StatelessWidget {
                         }
                         if (sizeInfo.deviceScreenType == DeviceScreenType.mobile) {
                           return Text(
-                            '404 Not Found 💫',
+                            '404 Not Found',
                             style: context.textTheme.headline5!.copyWith(
                               color: context.colorScheme.onSecondary,
                             ),
                           );
                         }
                         return Text(
-                          '404 Not Found 💫',
+                          '404 Not Found',
                           style: context.textTheme.headline6!.copyWith(
                             color: context.colorScheme.onSecondary,
                           ),
