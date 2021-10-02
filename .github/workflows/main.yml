@@ -26,6 +26,7 @@ jobs:
     - run: flutter pub get
     - run: flutter build web
     - run: git clone https://github.com/definev/definev.github.io.git
+    - run: ls
     - run: cp -a /build/web/. /define.github.io/
     - run: cd ./define.github.io
     - run: git add .
