@@ -32,42 +32,89 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     const PortfolioHeader(),
                     Expanded(
-                      child: CustomPaint(
-                        foregroundPainter: ItsMePainter(),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Container(
-                                height: double.maxFinite,
-                                width:
-                                    sizeInfo.screenSize.width - ((context.screenSize.width < kDesktopTight) ? 0 : 102),
-                                color: context.colorScheme.secondary,
-                                alignment:
-                                    context.screenSize.width < kDesktopTight ? Alignment.center : Alignment.centerRight,
-                                child: Card(
-                                  margin: context.screenSize.width < kDesktopTight
-                                      ? EdgeInsets.zero
-                                      : const EdgeInsets.only(right: 102),
-                                  color: context.colorScheme.surface,
-                                  child: SizedBox(
-                                    height: double.maxFinite,
-                                    width: context.screenSize.width < kDesktopTight
-                                        ? sizeInfo.screenSize.width
-                                        : context.screenSize.width - 102 - 50 - 300 - avatarFieldWidth(context),
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              height: double.maxFinite,
+                              width: sizeInfo.screenSize.width - ((context.screenSize.width < kDesktopTight) ? 0 : 102),
+                              color: context.colorScheme.secondary,
+                              alignment:
+                                  context.screenSize.width < kDesktopTight ? Alignment.center : Alignment.centerRight,
+                              child: Card(
+                                margin: context.screenSize.width < kDesktopTight
+                                    ? EdgeInsets.zero
+                                    : const EdgeInsets.only(right: 102),
+                                color: context.colorScheme.surface,
+                                child: SizedBox(
+                                  height: double.maxFinite,
+                                  width: context.screenSize.width < kDesktopTight
+                                      ? sizeInfo.screenSize.width
+                                      : context.screenSize.width - 102 - 50 - 300 - avatarFieldWidth(context),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: Sizes.m,
+                                                  bottom: Sizes.sm,
+                                                  left: Sizes.m,
+                                                ),
+                                                child: Text(
+                                                  'HOT',
+                                                  style: context.textTheme.headline1!.copyWith(fontSize: 75),
+                                                )),
+                                            const Expanded(
+                                              child: Center(
+                                                child:
+                                                    Text('Currently I\'m a bit busy ... So wait until I\'ve time ...'),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: Sizes.m,
+                                                  bottom: Sizes.sm,
+                                                  left: Sizes.m,
+                                                ),
+                                                child: Text(
+                                                  'NEW POST',
+                                                  style: context.textTheme.headline1!.copyWith(fontSize: 75),
+                                                )),
+                                            const Expanded(
+                                              child: Center(
+                                                child:
+                                                    Text('Currently I\'m a bit busy ... So wait until I\'ve time ...'),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
-                            if (context.screenSize.width >= kDesktopTight)
-                              Positioned(
-                                left: (context.screenSize.width < kDesktopTight) ? 0 : 25,
-                                right: (context.screenSize.width < kDesktopTight) ? 0 : null,
-                                bottom: 60,
-                                child: const NameWidget(),
-                              ),
-                          ],
-                        ),
+                          ),
+                          if (context.screenSize.width >= kDesktopTight)
+                            Positioned(
+                              left: (context.screenSize.width < kDesktopTight) ? 0 : 25,
+                              right: (context.screenSize.width < kDesktopTight) ? 0 : null,
+                              bottom: 60,
+                              child: const NameWidget(),
+                            ),
+                        ],
                       ),
                     ),
                   ],
@@ -131,7 +178,6 @@ class HomeScreen extends StatelessWidget {
                                     child: Image.asset(Images.avatar,
                                         color: Colors.transparent, colorBlendMode: BlendMode.clear),
                                   ),
-                                
                                 ],
                               ),
                             ),
@@ -205,19 +251,6 @@ class UnderlineButton extends HookWidget {
   }
 }
 
-class ItsMePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..strokeWidth = 10
-      ..color = Colors.blue
-      ..style = PaintingStyle.stroke;
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-}
-
 class NameWidget extends HookWidget {
   const NameWidget({
     Key? key,
@@ -232,29 +265,26 @@ class NameWidget extends HookWidget {
         children: [
           RotatedBox(
             quarterTurns: 3,
-            child: Padding(
-              padding: const EdgeInsets.only(left: Insets.xl + Insets.sm),
-              child: ShaderMask(
-                shaderCallback: (Rect bounds) => LinearGradient(
-                  colors: [
-                    context.screenSize.width < kDesktopTight
-                        ? context.colorScheme.onSecondary
-                        : context.colorScheme.onBackground,
-                    context.colorScheme.onSecondary,
-                  ],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  stops: List.generate(2, (index) => 0.1618),
-                ).createShader(bounds),
-                child: Transform.rotate(
-                  angle: pi * 0.1,
-                  child: SizedBox(
-                    height: 300,
-                    width: 300,
-                    child: Image.asset(
-                      Images.arrow,
-                      color: context.colorScheme.onSecondary,
-                    ),
+            child: ShaderMask(
+              shaderCallback: (Rect bounds) => LinearGradient(
+                colors: [
+                  context.screenSize.width < kDesktopTight
+                      ? context.colorScheme.onSecondary
+                      : context.colorScheme.onBackground,
+                  context.colorScheme.onSecondary,
+                ],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                stops: List.generate(2, (index) => 0.241),
+              ).createShader(bounds),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: SizedBox(
+                  height: 300,
+                  width: 300,
+                  child: Image.asset(
+                    Images.arrow1,
+                    color: context.colorScheme.onSecondary,
                   ),
                 ),
               ),
