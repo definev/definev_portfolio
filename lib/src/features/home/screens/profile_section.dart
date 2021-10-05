@@ -1,11 +1,9 @@
 import 'dart:ui';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:definev/src/public/widgets/animation/animated_text.dart';
 import 'package:definev/src/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-// import 'package:flutter_hooks/blog_hooks.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -78,11 +76,13 @@ I'm an introverse.
               runSpacing: Insets.m,
               spacing: Insets.m,
               children: [
-                Hashtag(uri: Uri.parse('https://definev.github.io/blog'), label: 'My little cat'),
-                Hashtag(uri: Uri.parse('https://definev.github.io/blog'), label: 'Flutter'),
-                Hashtag(uri: Uri.parse('https://definev.github.io/blog'), label: 'React'),
-                Hashtag(uri: Uri.parse('https://definev.github.io/blog'), label: 'Golang'),
-                Hashtag(uri: Uri.parse('https://definev.github.io/blog'), label: 'Daily Thought'),
+                /// TODO: BUG: This cause jank but i don't know how to reproduce to standalone project
+                /// TODO: BUG: Maybe because ShaderMask, ImageFilter, Image ...
+                Hashtag(uri: Uri.parse('https://definev.github.io/blog?q=cat'), label: 'My little cat'),
+                Hashtag(uri: Uri.parse('https://definev.github.io/blog?q=flutter'), label: 'Flutter'),
+                Hashtag(uri: Uri.parse('https://definev.github.io/blog?q=react'), label: 'React'),
+                Hashtag(uri: Uri.parse('https://definev.github.io/blog?q=golang'), label: 'Golang'),
+                Hashtag(uri: Uri.parse('https://definev.github.io/blog?q=daily'), label: 'Daily Thought'),
                 Hashtag(uri: Uri.parse('https://definev.github.io/blog'), label: 'Blogs'),
               ],
             ),
@@ -110,12 +110,15 @@ class Hashtag extends HookWidget {
       onEnter: (_) => _hover.value = true,
       onExit: (_) => _hover.value = false,
       child: Chip(
-        label: GestureDetector(
-          onTap: () => launch(uri.path),
-          child: Text(
-            '# $label',
-            style: context.textTheme.caption!.copyWith(
-              color: _hover.value ? context.colorScheme.onSecondary : context.colorScheme.onSurface,
+        label: Link(
+          uri: uri,
+          builder: (context, followLink) => GestureDetector(
+            onTap: () => launch(uri.path),
+            child: Text(
+              '# $label',
+              style: context.textTheme.caption!.copyWith(
+                color: _hover.value ? context.colorScheme.onSecondary : context.colorScheme.onSurface,
+              ),
             ),
           ),
         ),

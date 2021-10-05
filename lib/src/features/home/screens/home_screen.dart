@@ -1,11 +1,9 @@
-import 'dart:math';
-import 'dart:ui';
-
+import 'package:beamer/beamer.dart';
 import 'package:definev/src/features/home/screens/profile_section.dart';
 import 'package:definev/src/public/widgets/button/border_button.dart';
+import 'package:definev/src/public/widgets/button/underline_button.dart';
 import 'package:definev/src/public/widgets/portfolio_header.dart';
 import 'package:definev/src/utils/generator/resources.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:definev/src/utils/styles.dart';
@@ -31,165 +29,10 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   children: [
                     const PortfolioHeader(),
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              height: double.maxFinite,
-                              width: sizeInfo.screenSize.width - ((context.screenSize.width < kDesktopTight) ? 0 : 102),
-                              color: context.colorScheme.secondary,
-                              alignment:
-                                  context.screenSize.width < kDesktopTight ? Alignment.center : Alignment.centerRight,
-                              child: Card(
-                                margin: context.screenSize.width < kDesktopTight
-                                    ? EdgeInsets.zero
-                                    : const EdgeInsets.only(right: 102),
-                                color: context.colorScheme.surface,
-                                child: SizedBox(
-                                  height: double.maxFinite,
-                                  width: context.screenSize.width < kDesktopTight
-                                      ? sizeInfo.screenSize.width
-                                      : context.screenSize.width - 102 - 50 - 300 - avatarFieldWidth(context),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          children: [
-                                            Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: Sizes.m,
-                                                  bottom: Sizes.sm,
-                                                  left: Sizes.m,
-                                                ),
-                                                child: Text(
-                                                  'HOT',
-                                                  style: context.textTheme.headline1!.copyWith(fontSize: 75),
-                                                )),
-                                            const Expanded(
-                                              child: Center(
-                                                child:
-                                                    Text('Currently I\'m a bit busy ... So wait until I\'ve time ...'),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          children: [
-                                            Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: Sizes.m,
-                                                  bottom: Sizes.sm,
-                                                  left: Sizes.m,
-                                                ),
-                                                child: Text(
-                                                  'NEW POST',
-                                                  style: context.textTheme.headline1!.copyWith(fontSize: 75),
-                                                )),
-                                            const Expanded(
-                                              child: Center(
-                                                child:
-                                                    Text('Currently I\'m a bit busy ... So wait until I\'ve time ...'),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (context.screenSize.width >= kDesktopTight)
-                            Positioned(
-                              left: (context.screenSize.width < kDesktopTight) ? 0 : 25,
-                              right: (context.screenSize.width < kDesktopTight) ? 0 : null,
-                              bottom: 60,
-                              child: const NameWidget(),
-                            ),
-                        ],
-                      ),
-                    ),
+                    _buildPortfolioBody(sizeInfo, context),
                   ],
                 ),
-                Container(
-                  alignment: (context.screenSize.width < kDesktopTight) ? Alignment.topCenter : Alignment.topLeft,
-                  margin:
-                      (context.screenSize.width < kDesktopTight) ? EdgeInsets.zero : const EdgeInsets.only(left: 350),
-                  width: avatarFieldWidth(context),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: avatarFieldHeight(context),
-                        width: avatarFieldWidth(context),
-                        color: context.colorScheme.primary,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: 111,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  BorderButton(
-                                    child: Text('fb',
-                                        style: context.textTheme.bodyText1!
-                                            .copyWith(color: context.colorScheme.onPrimary)),
-                                    onPressed: () => launch('https://www.facebook.com/definev/'),
-                                  ),
-                                  Insets.xl.horizontal,
-                                  BorderButton(
-                                    child: Text('in',
-                                        style: context.textTheme.bodyText1!
-                                            .copyWith(color: context.colorScheme.onPrimary)),
-                                    onPressed: () => launch('https://www.linkedin.com/in/bui-duong-b574291a9/'),
-                                  ),
-                                  Insets.xl.horizontal,
-                                  BorderButton(
-                                    child: Text('gh',
-                                        style: context.textTheme.bodyText1!
-                                            .copyWith(color: context.colorScheme.onPrimary)),
-                                    onPressed: () => launch('https://github.com/definev'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: context.colorScheme.background, width: 10),
-                                      image: const DecorationImage(
-                                        image: AssetImage(Images.avatar),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    child: Image.asset(Images.avatar,
-                                        color: Colors.transparent, colorBlendMode: BlendMode.clear),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Expanded(
-                        child: ProfileSection(),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildInfoField(context),
               ],
             );
           }
@@ -199,59 +42,163 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class UnderlineButton extends HookWidget {
-  const UnderlineButton({
-    Key? key,
-    required this.title,
-    required this.onPressed,
-    this.color,
-  }) : super(key: key);
+  Widget _buildInfoField(BuildContext context) {
+    return Container(
+      alignment: (context.screenSize.width < kDesktopTight) ? Alignment.topCenter : Alignment.topLeft,
+      margin: (context.screenSize.width < kDesktopTight) ? EdgeInsets.zero : const EdgeInsets.only(left: 350),
+      width: avatarFieldWidth(context),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: avatarFieldHeight(context),
+            width: avatarFieldWidth(context),
+            color: context.colorScheme.primary,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 111,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BorderButton(
+                        child: Text('fb',
+                            style: context.textTheme.bodyText1!.copyWith(color: context.colorScheme.onPrimary)),
+                        onPressed: () => launch('https://www.facebook.com/definev/'),
+                      ),
+                      Insets.xl.horizontal,
+                      BorderButton(
+                        child: Text('in',
+                            style: context.textTheme.bodyText1!.copyWith(color: context.colorScheme.onPrimary)),
+                        onPressed: () => launch('https://www.linkedin.com/in/bui-duong-b574291a9/'),
+                      ),
+                      Insets.xl.horizontal,
+                      BorderButton(
+                        child: Text('gh',
+                            style: context.textTheme.bodyText1!.copyWith(color: context.colorScheme.onPrimary)),
+                        onPressed: () => launch('https://github.com/definev'),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // TODO: Comment block of code performance better but slightly lag
+                      // BEGIN
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: context.colorScheme.background, width: 10),
+                          image: const DecorationImage(
+                            image: AssetImage(Images.avatar),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Image.asset(Images.avatar, color: Colors.transparent, colorBlendMode: BlendMode.clear),
+                      ),
+                      // END
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(child: ProfileSection()),
+        ],
+      ),
+    );
+  }
 
-  final String title;
-  final VoidCallback onPressed;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    final onRegion = useState(false);
-
-    return MouseRegion(
-      onEnter: (_) => onRegion.value = true,
-      onExit: (_) => onRegion.value = false,
-      child: GestureDetector(
-        onTap: onPressed,
-        child: SizedBox(
-          height: Sizes.l,
-          width: 100.0,
-          child: Column(
-            children: [
-              Expanded(
-                  child: Center(
-                      child: Text(
-                title,
-                style: context.textTheme.bodyText1!.copyWith(color: color),
-              ))),
-              TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0.0, end: onRegion.value == true ? 1 : 0),
-                duration: Durations.fast,
-                curve: Curves.decelerate,
-                builder: (context, value, child) => Container(
-                  height: 2 + 2 * value,
-                  width: double.maxFinite,
-                  color: color ?? context.colorScheme.onBackground,
+  Widget _buildPortfolioBody(SizingInformation sizeInfo, BuildContext context) {
+    return Expanded(
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Container(
+              height: double.maxFinite,
+              width: sizeInfo.screenSize.width - ((context.screenSize.width < kDesktopTight) ? 0 : 102),
+              color: context.colorScheme.secondary,
+              alignment: context.screenSize.width < kDesktopTight ? Alignment.center : Alignment.centerRight,
+              child: Card(
+                margin: context.screenSize.width < kDesktopTight ? EdgeInsets.zero : const EdgeInsets.only(right: 102),
+                color: context.colorScheme.surface,
+                child: SizedBox(
+                  height: double.maxFinite,
+                  width: context.screenSize.width < kDesktopTight
+                      ? sizeInfo.screenSize.width
+                      : context.screenSize.width - 102 - 50 - 300 - avatarFieldWidth(context),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.only(
+                                  top: Sizes.m,
+                                  bottom: Sizes.sm,
+                                  left: Sizes.m,
+                                ),
+                                child: Text(
+                                  'HOT',
+                                  style: context.textTheme.headline1!.copyWith(fontSize: 75),
+                                )),
+                            const Expanded(
+                              child: Center(
+                                child: Text('Currently I\'m a bit busy ... So wait until I\'ve time ...'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.only(
+                                  top: Sizes.m,
+                                  bottom: Sizes.sm,
+                                  left: Sizes.m,
+                                ),
+                                child: Text(
+                                  'NEW POST',
+                                  style: context.textTheme.headline1!.copyWith(fontSize: 75),
+                                )),
+                            const Expanded(
+                              child: Center(
+                                child: Text('Currently I\'m a bit busy ... So wait until I\'ve time ...'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+          if (context.screenSize.width >= kDesktopTight)
+            Positioned(
+              left: (context.screenSize.width < kDesktopTight) ? 0 : 25,
+              right: (context.screenSize.width < kDesktopTight) ? 0 : null,
+              bottom: 60,
+              child: const NameWidget(),
+            ),
+        ],
       ),
     );
   }
 }
 
-class NameWidget extends HookWidget {
+class NameWidget extends StatelessWidget {
   const NameWidget({
     Key? key,
   }) : super(key: key);
@@ -263,6 +210,9 @@ class NameWidget extends HookWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          // TODO: Comment block of code performance better but slightly lag
+      
+          /// BEGIN
           RotatedBox(
             quarterTurns: 3,
             child: ShaderMask(
@@ -290,6 +240,9 @@ class NameWidget extends HookWidget {
               ),
             ),
           ),
+
+          /// END
+
           SizedBox(
             width: context.screenSize.height < 1000 ? 419 : 558.0,
             child: Column(
@@ -300,23 +253,29 @@ class NameWidget extends HookWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       UnderlineButton(
-                        onPressed: () {},
+                        onPressed: () => launch(
+                            'https://drive.google.com/file/d/17bgMKoFJmrS61ehzuHv4yqwAAm4go6_W/view?usp=sharing'),
                         title: 'download cv',
                         color: context.colorScheme.onSecondary,
                       ),
                       UnderlineButton(
-                        onPressed: () {},
+                        // Change to BlogLocation
+                        onPressed: () => context.beamToNamed('/blog'),
                         title: 'definev\'s blog',
                         color: context.colorScheme.onSecondary,
                       ),
                       UnderlineButton(
-                        onPressed: () {},
+                        // Change to WorkLocation
+                        onPressed: () => context.beamToNamed('/work'),
                         title: 'latest work',
                         color: context.colorScheme.onSecondary,
                       ),
                     ],
                   ),
                 ),
+
+                // TODO: Comment block of code performance better but slightly lag
+                // BEGIN
                 Padding(
                   padding: EdgeInsets.only(bottom: context.screenSize.height < 1000.0 ? 19 : 0),
                   child: ShaderMask(
@@ -346,6 +305,7 @@ class NameWidget extends HookWidget {
                     ),
                   ),
                 ),
+                // END
               ],
             ),
           ),
